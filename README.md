@@ -62,7 +62,7 @@ With more time, these features could be added:
 
 ## Credits
 
-Created by [Your Name] for the "That's Entertainment!" Challenge using Amazon Q Developer.
+Created by Akua Konadu for the "That's Entertainment!" Challenge using Amazon Q Developer.
 
 ## License
 
