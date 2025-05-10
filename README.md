@@ -2,7 +2,7 @@
 
 A retro-style digital DJ system created for the "That's Entertainment!" Challenge using Amazon Q Developer.
 
-![RetroMix DJ Screenshot](screenshot.png)
+![RetroMix DJ Screenshot](img/Screenshot.png)
 
 ## About RetroMix DJ
 
