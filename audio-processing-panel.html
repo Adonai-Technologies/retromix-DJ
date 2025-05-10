@@ -1,0 +1,473 @@
+<!-- Advanced Audio Processing Panel -->
+<div class="effects-panel">
+    <div class="effects-header">
+        <h3>Advanced Audio Processing</h3>
+    </div>
+    
+    <div class="effects-tabs">
+        <button class="effects-tab active" data-tab="effects">Effects</button>
+        <button class="effects-tab" data-tab="compression">Compression</button>
+        <button class="effects-tab" data-tab="sidechain">Sidechain</button>
+    </div>
+    
+    <!-- Effects Tab -->
+    <div class="effects-content active" id="effects-tab">
+        <div class="deck-selector">
+            <button class="deck-button active" data-deck="left">Deck A</button>
+            <button class="deck-button" data-deck="right">Deck B</button>
+        </div>
+        
+        <div class="effect-controls" id="left-effects">
+            <!-- Reverb -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Reverb</div>
+                    <div class="effect-toggle" id="reverb-toggle-left"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Decay</div>
+                        <input type="range" class="param-slider" id="reverb-decay-left" min="0.1" max="10" step="0.1" value="2">
+                        <div class="param-value">2.0s</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Pre-Delay</div>
+                        <input type="range" class="param-slider" id="reverb-predelay-left" min="0" max="0.1" step="0.001" value="0.01">
+                        <div class="param-value">10ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="reverb-mix-left" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delay -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Delay</div>
+                    <div class="effect-toggle" id="delay-toggle-left"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Time</div>
+                        <input type="range" class="param-slider" id="delay-time-left" min="0.05" max="2" step="0.01" value="0.5">
+                        <div class="param-value">500ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Feedback</div>
+                        <input type="range" class="param-slider" id="delay-feedback-left" min="0" max="0.95" step="0.01" value="0.4">
+                        <div class="param-value">40%</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="delay-mix-left" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Flanger -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Flanger</div>
+                    <div class="effect-toggle" id="flanger-toggle-left"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Rate</div>
+                        <input type="range" class="param-slider" id="flanger-rate-left" min="0.05" max="5" step="0.01" value="0.2">
+                        <div class="param-value">0.2Hz</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Depth</div>
+                        <input type="range" class="param-slider" id="flanger-depth-left" min="0.1" max="10" step="0.1" value="5">
+                        <div class="param-value">5ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Feedback</div>
+                        <input type="range" class="param-slider" id="flanger-feedback-left" min="0" max="0.9" step="0.01" value="0.5">
+                        <div class="param-value">50%</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="flanger-mix-left" min="0" max="1" step="0.01" value="0.5">
+                        <div class="param-value">50%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Distortion -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Distortion</div>
+                    <div class="effect-toggle" id="distortion-toggle-left"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Amount</div>
+                        <input type="range" class="param-slider" id="distortion-amount-left" min="1" max="100" step="1" value="10">
+                        <div class="param-value">10</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="distortion-mix-left" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="effect-controls" id="right-effects" style="display: none;">
+            <!-- Reverb -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Reverb</div>
+                    <div class="effect-toggle" id="reverb-toggle-right"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Decay</div>
+                        <input type="range" class="param-slider" id="reverb-decay-right" min="0.1" max="10" step="0.1" value="2">
+                        <div class="param-value">2.0s</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Pre-Delay</div>
+                        <input type="range" class="param-slider" id="reverb-predelay-right" min="0" max="0.1" step="0.001" value="0.01">
+                        <div class="param-value">10ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="reverb-mix-right" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delay -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Delay</div>
+                    <div class="effect-toggle" id="delay-toggle-right"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Time</div>
+                        <input type="range" class="param-slider" id="delay-time-right" min="0.05" max="2" step="0.01" value="0.5">
+                        <div class="param-value">500ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Feedback</div>
+                        <input type="range" class="param-slider" id="delay-feedback-right" min="0" max="0.95" step="0.01" value="0.4">
+                        <div class="param-value">40%</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="delay-mix-right" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Flanger -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Flanger</div>
+                    <div class="effect-toggle" id="flanger-toggle-right"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Rate</div>
+                        <input type="range" class="param-slider" id="flanger-rate-right" min="0.05" max="5" step="0.01" value="0.2">
+                        <div class="param-value">0.2Hz</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Depth</div>
+                        <input type="range" class="param-slider" id="flanger-depth-right" min="0.1" max="10" step="0.1" value="5">
+                        <div class="param-value">5ms</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Feedback</div>
+                        <input type="range" class="param-slider" id="flanger-feedback-right" min="0" max="0.9" step="0.01" value="0.5">
+                        <div class="param-value">50%</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="flanger-mix-right" min="0" max="1" step="0.01" value="0.5">
+                        <div class="param-value">50%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Distortion -->
+            <div class="effect-unit">
+                <div class="effect-header">
+                    <div class="effect-title">Distortion</div>
+                    <div class="effect-toggle" id="distortion-toggle-right"></div>
+                </div>
+                <div class="effect-params">
+                    <div class="effect-param">
+                        <div class="param-label">Amount</div>
+                        <input type="range" class="param-slider" id="distortion-amount-right" min="1" max="100" step="1" value="10">
+                        <div class="param-value">10</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Mix</div>
+                        <input type="range" class="param-slider" id="distortion-mix-right" min="0" max="1" step="0.01" value="0.3">
+                        <div class="param-value">30%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Compression Tab -->
+    <div class="effects-content" id="compression-tab">
+        <div class="deck-selector">
+            <button class="deck-button active" data-deck="left">Deck A</button>
+            <button class="deck-button" data-deck="right">Deck B</button>
+        </div>
+        
+        <div class="compressor-controls" id="left-compressor">
+            <div class="compressor-header">
+                <div class="compressor-title">Multiband Compressor</div>
+                <div class="compressor-toggle" id="compressor-toggle-left"></div>
+            </div>
+            
+            <div class="compressor-bands">
+                <!-- Low Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">Low Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="low-threshold-left" min="-60" max="0" step="1" value="-24">
+                            <div class="param-value">-24dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="low-ratio-left" min="1" max="20" step="0.1" value="4">
+                            <div class="param-value">4:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="low-gain-left" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mid Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">Mid Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="mid-threshold-left" min="-60" max="0" step="1" value="-18">
+                            <div class="param-value">-18dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="mid-ratio-left" min="1" max="20" step="0.1" value="3">
+                            <div class="param-value">3:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="mid-gain-left" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- High Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">High Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="high-threshold-left" min="-60" max="0" step="1" value="-12">
+                            <div class="param-value">-12dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="high-ratio-left" min="1" max="20" step="0.1" value="2">
+                            <div class="param-value">2:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="high-gain-left" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Limiter -->
+            <div class="limiter-controls">
+                <div class="band-header">
+                    <div class="band-title">Limiter</div>
+                </div>
+                <div class="band-params">
+                    <div class="effect-param">
+                        <div class="param-label">Threshold</div>
+                        <input type="range" class="param-slider" id="limiter-threshold-left" min="-12" max="0" step="0.1" value="-0.5">
+                        <div class="param-value">-0.5dB</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Output Gain</div>
+                        <input type="range" class="param-slider" id="limiter-gain-left" min="0" max="2" step="0.01" value="1">
+                        <div class="param-value">0dB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="compressor-controls" id="right-compressor" style="display: none;">
+            <!-- Similar structure for right deck compressor -->
+            <div class="compressor-header">
+                <div class="compressor-title">Multiband Compressor</div>
+                <div class="compressor-toggle" id="compressor-toggle-right"></div>
+            </div>
+            
+            <div class="compressor-bands">
+                <!-- Low Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">Low Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="low-threshold-right" min="-60" max="0" step="1" value="-24">
+                            <div class="param-value">-24dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="low-ratio-right" min="1" max="20" step="0.1" value="4">
+                            <div class="param-value">4:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="low-gain-right" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mid Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">Mid Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="mid-threshold-right" min="-60" max="0" step="1" value="-18">
+                            <div class="param-value">-18dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="mid-ratio-right" min="1" max="20" step="0.1" value="3">
+                            <div class="param-value">3:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="mid-gain-right" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- High Band -->
+                <div class="compressor-band">
+                    <div class="band-header">
+                        <div class="band-title">High Band</div>
+                    </div>
+                    <div class="band-params">
+                        <div class="effect-param">
+                            <div class="param-label">Threshold</div>
+                            <input type="range" class="param-slider" id="high-threshold-right" min="-60" max="0" step="1" value="-12">
+                            <div class="param-value">-12dB</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Ratio</div>
+                            <input type="range" class="param-slider" id="high-ratio-right" min="1" max="20" step="0.1" value="2">
+                            <div class="param-value">2:1</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Gain</div>
+                            <input type="range" class="param-slider" id="high-gain-right" min="0" max="2" step="0.01" value="1">
+                            <div class="param-value">0dB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Limiter -->
+            <div class="limiter-controls">
+                <div class="band-header">
+                    <div class="band-title">Limiter</div>
+                </div>
+                <div class="band-params">
+                    <div class="effect-param">
+                        <div class="param-label">Threshold</div>
+                        <input type="range" class="param-slider" id="limiter-threshold-right" min="-12" max="0" step="0.1" value="-0.5">
+                        <div class="param-value">-0.5dB</div>
+                    </div>
+                    <div class="effect-param">
+                        <div class="param-label">Output Gain</div>
+                        <input type="range" class="param-slider" id="limiter-gain-right" min="0" max="2" step="0.01" value="1">
+                        <div class="param-value">0dB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sidechain Tab -->
+    <div class="effects-content" id="sidechain-tab">
+        <div class="sidechain-controls">
+            <div class="sidechain-header">
+                <div class="sidechain-title">Sidechain Compression</div>
+                <div class="sidechain-toggle" id="sidechain-toggle"></div>
+            </div>
+            
+            <div class="sidechain-options">
+                <div class="sidechain-option">
+                    <div class="param-label">Source</div>
+                    <select id="sidechain-source" class="param-select">
+                        <option value="left">Deck A</option>
+                        <option value="right">Deck B</option>
+                    </select>
+                </div>
+                <div class="sidechain-option">
+                    <div class="param-label">Target</div>
+                    <select id="sidechain-target" class="param-select">
+                        <option value="right">Deck B</option>
+                        <option value="left">Deck A</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="sidechain-params">
+                <div class="effect-param">
+                    <div class="param-label">Amount</div>
+                    <input type="range" class="param-slider" id="sidechain-amount" min="0" max="1" step="0.01" value="0.5">
+                    <div class="param-value">50%</div>
+                </div>
+                <div class="effect-param">
+                    <div class="param-label">Release</div>
+                    <input type="range" class="param-slider" id="sidechain-release" min="0.05" max="1" step="0.01" value="0.2">
+                    <div class="param-value">200ms</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroMix DJ - Beat Detection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000033;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff00ff;
+            text-align: center;
+        }
+        .test-panel {
+            background-color: #222244;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #444466;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #6666aa;
+        }
+        .waveform {
+            width: 100%;
+            height: 150px;
+            background-color: #000;
+            border: 1px solid #00ffff;
+            margin-top: 20px;
+        }
+        .results {
+            background-color: #000;
+            border: 1px solid #00ffff;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RetroMix DJ - Beat Detection Test</h1>
+        
+        <div class="test-panel">
+            <h2>Test Beat Detection</h2>
+            <p>Upload an audio file to test the beat detection algorithm:</p>
+            <input type="file" id="audio-file" accept="audio/*">
+            <button id="analyze-btn">Analyze BPM</button>
+            <button id="play-btn" disabled>Play/Pause</button>
+            
+            <div class="waveform" id="waveform"></div>
+            
+            <div class="results" id="results">Results will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audioFileInput = document.getElementById("audio-file");
+            const analyzeBtn = document.getElementById("analyze-btn");
+            const playBtn = document.getElementById("play-btn");
+            const waveformCanvas = document.getElementById("waveform");
+            const resultsDiv = document.getElementById("results");
+            
+            let audioContext;
+            let audioBuffer;
+            let audioSource;
+            let isPlaying = false;
+            
+            // Initialize audio context
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                log("Audio context initialized");
+            } catch (e) {
+                log("Error initializing audio context: " + e);
+            }
+            
+            // Set up canvas
+            const ctx = waveformCanvas.getContext("2d");
+            waveformCanvas.width = waveformCanvas.offsetWidth;
+            waveformCanvas.height = waveformCanvas.offsetHeight;
+            
+            // Event listeners
+            analyzeBtn.addEventListener("click", analyzeAudio);
+            playBtn.addEventListener("click", togglePlayback);
+            
+            // Analyze audio file
+            function analyzeAudio() {
+                const file = audioFileInput.files[0];
+                if (!file) {
+                    log("Please select an audio file");
+                    return;
+                }
+                
+                log("Loading audio file: " + file.name);
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const arrayBuffer = e.target.result;
+                    
+                    // Decode audio data
+                    audioContext.decodeAudioData(arrayBuffer, function(buffer) {
+                        audioBuffer = buffer;
+                        log("Audio decoded successfully, duration: " + buffer.duration.toFixed(2) + " seconds");
+                        
+                        // Draw waveform
+                        drawWaveform(buffer);
+                        
+                        // Enable play button
+                        playBtn.disabled = false;
+                        
+                        // Detect BPM
+                        detectBPM(buffer);
+                    }, function(error) {
+                        log("Error decoding audio: " + error);
+                    });
+                };
+                
+                reader.onerror = function() {
+                    log("Error reading file");
+                };
+                
+                reader.readAsArrayBuffer(file);
+            }
+            
+            // Draw waveform
+            function drawWaveform(buffer) {
+                const data = buffer.getChannelData(0);
+                const step = Math.ceil(data.length / waveformCanvas.width);
+                const amp = waveformCanvas.height / 2;
+                
+                ctx.clearRect(0, 0, waveformCanvas.width, waveformCanvas.height);
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, waveformCanvas.width, waveformCanvas.height);
+                
+                ctx.beginPath();
+                ctx.moveTo(0, amp);
+                
+                for (let i = 0; i < waveformCanvas.width; i++) {
+                    let min = 1.0;
+                    let max = -1.0;
+                    
+                    for (let j = 0; j < step; j++) {
+                        const datum = data[(i * step) + j];
+                        if (datum < min) min = datum;
+                        if (datum > max) max = datum;
+                    }
+                    
+                    ctx.lineTo(i, (1 + min) * amp);
+                    ctx.lineTo(i, (1 + max) * amp);
+                }
+                
+                ctx.strokeStyle = "#00ffff";
+                ctx.stroke();
+            }
+            
+            // Detect BPM
+            function detectBPM(buffer) {
+                log("Analyzing BPM...");
+                
+                // Create a worker for BPM detection
+                const worker = new Worker("beat-detection-worker.js");
+                
+                // Extract data for BPM analysis
+                const data = buffer.getChannelData(0);
+                
+                // Send data to worker for processing
+                worker.postMessage({
+                    audioData: data,
+                    sampleRate: buffer.sampleRate
+                });
+                
+                // Handle worker response
+                worker.onmessage = function(e) {
+                    const { bpm, beatGrid, confidence } = e.data;
+                    
+                    log("BPM detected: " + bpm.toFixed(1) + " (confidence: " + confidence.toFixed(2) + ")");
+                    log("Beat grid contains " + beatGrid.length + " beats");
+                    
+                    // Draw beat grid on waveform
+                    drawBeatGrid(beatGrid, buffer.duration);
+                    
+                    // Terminate worker
+                    worker.terminate();
+                };
+                
+                worker.onerror = function(error) {
+                    log("Beat detection worker error: " + error);
+                    worker.terminate();
+                };
+            }
+            
+            // Draw beat grid on waveform
+            function drawBeatGrid(beatGrid, duration) {
+                // Draw beat markers
+                ctx.fillStyle = "#ffff00";
+                
+                for (let i = 0; i < beatGrid.length; i++) {
+                    const beatTime = beatGrid[i];
+                    const x = (beatTime / duration) * waveformCanvas.width;
+                    
+                    // Draw different heights for different beat positions
+                    const beatInBar = i % 4;
+                    let markerHeight;
+                    
+                    if (beatInBar === 0) {
+                        // First beat in bar (downbeat)
+                        markerHeight = waveformCanvas.height;
+                        ctx.fillStyle = "#ff00ff";
+                    } else {
+                        // Other beats
+                        markerHeight = waveformCanvas.height * 0.7;
+                        ctx.fillStyle = "#ffff00";
+                    }
+                    
+                    ctx.fillRect(x - 1, 0, 2, markerHeight);
+                }
+            }
+            
+            // Toggle playback
+            function togglePlayback() {
+                if (!audioBuffer) {
+                    log("No audio loaded");
+                    return;
+                }
+                
+                if (isPlaying) {
+                    // Stop playback
+                    if (audioSource) {
+                        audioSource.stop();
+                        audioSource = null;
+                    }
+                    isPlaying = false;
+                    playBtn.textContent = "Play";
+                } else {
+                    // Start playback
+                    audioSource = audioContext.createBufferSource();
+                    audioSource.buffer = audioBuffer;
+                    audioSource.connect(audioContext.destination);
+                    audioSource.start();
+                    isPlaying = true;
+                    playBtn.textContent = "Pause";
+                    
+                    // When track ends
+                    audioSource.onended = function() {
+                        isPlaying = false;
+                        playBtn.textContent = "Play";
+                    };
+                }
+            }
+            
+            // Log message to results div
+            function log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                resultsDiv.textContent += `[${timestamp}] ${message}\n`;
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

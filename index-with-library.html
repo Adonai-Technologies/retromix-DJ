@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroMix DJ - Advanced Digital DJ System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loop-styles.css">
+    <link rel="stylesheet" href="css/sample-pad-styles.css">
+    <link rel="stylesheet" href="css/track-library-styles.css">
+</head>
+<body class="theme-retro" data-layout="standard">
+    <div class="container">
+        <header>
+            <h1 class="retro-text">RetroMix DJ</h1>
+            <div class="controls-container">
+                <div class="bpm-display">
+                    <span id="bpm-value">120</span> BPM
+                </div>
+                <div class="master-controls">
+                    <button class="btn" id="sync-button" data-tooltip="Sync Decks">SYNC</button>
+                    <button class="btn" id="record-button" data-tooltip="Record Mix">REC</button>
+                    <div class="dropdown">
+                        <button class="btn" id="settings-button">SETTINGS</button>
+                        <div class="dropdown-content">
+                            <a href="#" id="theme-retro">Retro Theme</a>
+                            <a href="#" id="theme-modern">Modern Theme</a>
+                            <a href="#" id="theme-neon">Neon Theme</a>
+                            <a href="#" id="theme-minimal">Minimal Theme</a>
+                            <hr>
+                            <a href="#" id="toggle-keyboard">Keyboard Shortcuts</a>
+                            <a href="#" id="toggle-tooltips">Tooltips</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="dj-console">
+            <div class="deck deck-left">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-left">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-left"></div>
+                    </div>
+                    <div class="waveform-container">
+                        <canvas id="waveform-left"></canvas>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-left">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-left" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-left" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-left" data-tooltip="Cue">CUE</button>
+                    </div>
+                    
+                    <!-- Hot Cues Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">HOT CUES</div>
+                        <div class="hot-cues">
+                            <button class="hot-cue" id="hotcue-1-left">1</button>
+                            <button class="hot-cue" id="hotcue-2-left">2</button>
+                            <button class="hot-cue" id="hotcue-3-left">3</button>
+                            <button class="hot-cue" id="hotcue-4-left">4</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loop Controls Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">LOOP</div>
+                        <div class="loop-controls">
+                            <button class="loop-button" id="loop-in-left">IN</button>
+                            <button class="loop-button" id="loop-left">LOOP</button>
+                            <button class="loop-button" id="loop-out-left">OUT</button>
+                            <div class="loop-size-controls">
+                                <button class="loop-size-button" id="loop-size-down-left">-</button>
+                                <div class="loop-size-display" id="loop-size-left">4</div>
+                                <button class="loop-size-button" id="loop-size-up-left">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-left" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-left" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-left" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-left" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-knob-container">
+                            <div class="knob large-knob" id="filter-left" data-tooltip="Filter"></div>
+                            <label>FILTER</label>
+                        </div>
+                        <div class="filter-toggle">
+                            <button class="btn small-btn active" id="filter-lp-left">LP</button>
+                            <button class="btn small-btn" id="filter-hp-left">HP</button>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-left" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mixer">
+                <div class="crossfader-container">
+                    <input type="range" id="crossfader" min="0" max="100" value="50" class="slider" data-tooltip="Crossfader">
+                    <label>CROSSFADER</label>
+                </div>
+                <div class="visualizer-container">
+                    <div class="visualizer-type-selector">
+                        <button class="btn small-btn active" id="viz-spectrum">SPECTRUM</button>
+                        <button class="btn small-btn" id="viz-waveform">WAVE</button>
+                        <button class="btn small-btn" id="viz-circular">CIRCLE</button>
+                        <button class="btn small-btn" id="viz-3d">3D</button>
+                    </div>
+                    <canvas id="visualizer"></canvas>
+                </div>
+                <div class="effects-rack">
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <span>ECHO</span>
+                            <button class="effect-toggle" id="effect-1"></button>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="echo-time" min="0" max="100" value="50">
+                                <label>TIME</label>
+                            </div>
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="echo-feedback" min="0" max="100" value="60">
+                                <label>FDBK</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <span>FILTER</span>
+                            <button class="effect-toggle" id="effect-2"></button>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="filter-freq" min="0" max="100" value="50">
+                                <label>FREQ</label>
+                            </div>
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="filter-res" min="0" max="100" value="20">
+                                <label>RES</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="deck deck-right">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-right">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-right"></div>
+                    </div>
+                    <div class="waveform-container">
+                        <canvas id="waveform-right"></canvas>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-right">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-right" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-right" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-right" data-tooltip="Cue">CUE</button>
+                    </div>
+                    
+                    <!-- Hot Cues Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">HOT CUES</div>
+                        <div class="hot-cues">
+                            <button class="hot-cue" id="hotcue-1-right">1</button>
+                            <button class="hot-cue" id="hotcue-2-right">2</button>
+                            <button class="hot-cue" id="hotcue-3-right">3</button>
+                            <button class="hot-cue" id="hotcue-4-right">4</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loop Controls Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">LOOP</div>
+                        <div class="loop-controls">
+                            <button class="loop-button" id="loop-in-right">IN</button>
+                            <button class="loop-button" id="loop-right">LOOP</button>
+                            <button class="loop-button" id="loop-out-right">OUT</button>
+                            <div class="loop-size-controls">
+                                <button class="loop-size-button" id="loop-size-down-right">-</button>
+                                <div class="loop-size-display" id="loop-size-right">4</div>
+                                <button class="loop-size-button" id="loop-size-up-right">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-right" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-right" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-right" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-right" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-knob-container">
+                            <div class="knob large-knob" id="filter-right" data-tooltip="Filter"></div>
+                            <label>FILTER</label>
+                        </div>
+                        <div class="filter-toggle">
+                            <button class="btn small-btn active" id="filter-lp-right">LP</button>
+                            <button class="btn small-btn" id="filter-hp-right">HP</button>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-right" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sample-pad-controls">
+            <button class="btn" id="edit-samples-btn">Edit Samples</button>
+            <button class="btn" id="reset-samples-btn">Reset All Samples</button>
+        </div>
+        
+        <div class="sample-pads">
+            <div class="pad" id="pad-1" data-tooltip="Beat 1">BEAT 1</div>
+            <div class="pad" id="pad-2" data-tooltip="Beat 2">BEAT 2</div>
+            <div class="pad" id="pad-3" data-tooltip="Vocal">VOCAL</div>
+            <div class="pad" id="pad-4" data-tooltip="Horn">HORN</div>
+            <div class="pad" id="pad-5" data-tooltip="Scratch">SCRATCH</div>
+            <div class="pad" id="pad-6" data-tooltip="Drop">DROP</div>
+            <div class="pad" id="pad-7" data-tooltip="Siren">SIREN</div>
+            <div class="pad" id="pad-8" data-tooltip="Noise">NOISE</div>
+        </div>
+        
+        <div class="track-browser">
+            <div class="track-browser-header">
+                <h3>Track Library</h3>
+                <div class="library-controls">
+                    <button class="btn" id="create-playlist-btn">New Playlist</button>
+                    <button class="btn" id="import-library-btn">Import</button>
+                    <button class="btn" id="export-library-btn">Export</button>
+                </div>
+                <div class="track-search">
+                    <input type="text" id="track-search" placeholder="Search tracks...">
+                </div>
+                <div class="playlist-selector">
+                    <select id="playlist-selector">
+                        <option value="">All Tracks</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="recent">Recently Played</option>
+                    </select>
+                </div>
+            </div>
+            <div class="track-list" id="track-list">
+                <!-- Tracks will be loaded here -->
+            </div>
+        </div>
+        
+        <footer>
+            <div class="credits">
+                <p>RetroMix DJ - Advanced Digital DJ System</p>
+                <p>Created for the "That's Entertainment!" Challenge</p>
+                <p>Built with Amazon Q Developer</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dialogs -->
+    <div id="file-dialog" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Load Audio File</h2>
+            <input type="file" id="audio-file-input" accept="audio/*">
+            <button id="load-file-btn" class="btn">Load</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/workers/beat-detection-worker.js"></script>
+    <script src="js/audio-engine.js"></script>
+    <script src="js/audio-engine-loop.js"></script>
+    <script src="js/beat-manager.js"></script>
+    <script src="js/waveform-display.js"></script>
+    <script src="js/waveform-display-loop.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/ui-controller.js"></script>
+    <script src="js/ui-controller-loop.js"></script>
+    <script src="js/loop-system.js"></script>
+    <script src="js/sample-manager.js"></script>
+    <script src="js/sample-pad-controller.js"></script>
+    <script src="js/track-metadata-extractor.js"></script>
+    <script src="js/track-library-manager.js"></script>
+    <script src="js/track-library-ui.js"></script>
+    <script>
+        // Initialize application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create audio context on user interaction to comply with autoplay policies
+            const startButton = document.createElement('button');
+            startButton.textContent = 'START RETROMIX DJ';
+            startButton.className = 'start-button';
+            startButton.addEventListener('click', () => {
+                try {
+                    // Remove start button
+                    document.body.removeChild(startButton);
+                    
+                    // Show loading message
+                    const loadingMessage = document.createElement('div');
+                    loadingMessage.textContent = 'Loading...';
+                    loadingMessage.className = 'loading-message';
+                    document.body.appendChild(loadingMessage);
+                    
+                    // Initialize app after a short delay to show loading animation
+                    setTimeout(() => {
+                        try {
+                            document.body.removeChild(loadingMessage);
+                            
+                            // Initialize components
+                            const audioEngine = new AudioEngine();
+                            const beatManager = new BeatManager(audioEngine);
+                            const waveformDisplay = new WaveformDisplay(audioEngine, beatManager);
+                            const visualizer = new Visualizer(audioEngine);
+                            const uiController = new UIController(audioEngine, visualizer);
+                            const loopSystem = new LoopSystem(audioEngine, waveformDisplay);
+                            const sampleManager = new SampleManager(audioEngine);
+                            const samplePadController = new SamplePadController(sampleManager);
+                            const metadataExtractor = new TrackMetadataExtractor();
+                            const libraryManager = new TrackLibraryManager();
+                            const libraryUI = new TrackLibraryUI(libraryManager);
+                            
+                            // Store in global app object
+                            window.app = {
+                                audioEngine,
+                                beatManager,
+                                waveformDisplay,
+                                visualizer,
+                                uiController,
+                                loopSystem,
+                                sampleManager,
+                                samplePadController,
+                                metadataExtractor,
+                                libraryManager,
+                                libraryUI,
+                                keyboardShortcutsEnabled: true,
+                                tooltipsEnabled: true
+                            };
+                            
+                            // Initialize visualizers
+                            visualizer.initVisualizer('visualizer', 'spectrum');
+                            
+                            // Initialize waveform displays
+                            waveformDisplay.initDisplay('left', 'waveform-left');
+                            waveformDisplay.initDisplay('right', 'waveform-right');
+                            
+                            // Initialize loop and hot cue UI
+                            uiController.initializeLoopAndHotCueUI();
+                            
+                            // Load default samples
+                            sampleManager.loadDefaultSamples().then(count => {
+                                console.log(`Loaded ${count} samples`);
+                            });
+                            
+                            // Set up sample pad controls
+                            document.getElementById('edit-samples-btn').addEventListener('click', () => {
+                                const isEditMode = samplePadController.toggleEditMode();
+                                document.getElementById('edit-samples-btn').textContent = 
+                                    isEditMode ? 'Done Editing' : 'Edit Samples';
+                            });
+                            
+                            document.getElementById('reset-samples-btn').addEventListener('click', () => {
+                                if (confirm('Reset all samples to default?')) {
+                                    sampleManager.loadDefaultSamples();
+                                }
+                            });
+                            
+                            // Listen for track loading from library
+                            document.addEventListener('loadtrackfromlibrary', (e) => {
+                                const { trackId, deckId } = e.detail;
+                                const track = libraryManager.getTrack(trackId);
+                                if (track) {
+                                    // In a real implementation, we would load the track file here
+                                    console.log(`Loading track ${track.title} to ${deckId} deck`);
+                                    
+                                    // Update UI
+                                    uiController.updateTrackInfo(deckId, `${track.artist} - ${track.title}`);
+                                    
+                                    // Add to history
+                                    libraryManager.addTrackToHistory(trackId, deckId);
+                                }
+                            });
+                            
+                            // Set up theme selectors
+                            document.getElementById('theme-retro').addEventListener('click', () => {
+                                setTheme('retro');
+                            });
+                            
+                            document.getElementById('theme-modern').addEventListener('click', () => {
+                                setTheme('modern');
+                            });
+                            
+                            document.getElementById('theme-neon').addEventListener('click', () => {
+                                setTheme('neon');
+                            });
+                            
+                            document.getElementById('theme-minimal').addEventListener('click', () => {
+                                setTheme('minimal');
+                            });
+                            
+                            // Toggle keyboard shortcuts
+                            document.getElementById('toggle-keyboard').addEventListener('click', () => {
+                                const enabled = !window.app.keyboardShortcutsEnabled;
+                                window.app.keyboardShortcutsEnabled = enabled;
+                                document.getElementById('toggle-keyboard').textContent = 
+                                    `Keyboard Shortcuts: ${enabled ? 'ON' : 'OFF'}`;
+                                console.log(`Keyboard shortcuts ${enabled ? 'enabled' : 'disabled'}`);
+                            });
+                            
+                            // Toggle tooltips
+                            document.getElementById('toggle-tooltips').addEventListener('click', () => {
+                                const enabled = !window.app.tooltipsEnabled;
+                                window.app.tooltipsEnabled = enabled;
+                                document.getElementById('toggle-tooltips').textContent = 
+                                    `Tooltips: ${enabled ? 'ON' : 'OFF'}`;
+                                console.log(`Tooltips ${enabled ? 'enabled' : 'disabled'}`);
+                            });
+                            
+                            console.log('RetroMix DJ initialized with all features');
+                            
+                            // Theme switching function
+                            function setTheme(theme) {
+                                document.body.className = `theme-${theme}`;
+                                console.log(`Theme set to: ${theme}`);
+                            }
+                        } catch (error) {
+                            console.error('Error initializing app:', error);
+                            alert('Error initializing app: ' + error.message);
+                        }
+                    }, 1000);
+                } catch (error) {
+                    console.error('Error starting app:', error);
+                    alert('Error starting app: ' + error.message);
+                }
+            });
+            
+            document.body.appendChild(startButton);
+        });
+
+        // Add styles for start button and loading message
+        const style = document.createElement('style');
+        style.textContent = `
+            .start-button {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px 40px;
+                font-family: 'Press Start 2P', cursive;
+                font-size: 1.5rem;
+                background-color: #ff00ff;
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 0 0 20px #00ffff;
+                z-index: 1000;
+                animation: pulse 1.5s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { transform: translate(-50%, -50%) scale(1); }
+                50% { transform: translate(-50%, -50%) scale(1.05); }
+                100% { transform: translate(-50%, -50%) scale(1); }
+            }
+            
+            .loading-message {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Press Start 2P', cursive;
+                font-size: 2rem;
+                color: #00ffff;
+                z-index: 1000;
+                animation: blink 1s infinite;
+            }
+            
+            @keyframes blink {
+                0% { opacity: 1; }
+                50% { opacity: 0.5; }
+                100% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

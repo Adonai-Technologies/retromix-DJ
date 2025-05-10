@@ -1,0 +1,48 @@
+        <!-- AI Features Panel -->
+        <div class="ai-features-panel">
+            <div class="ai-features-header">
+                <h3>AI Features</h3>
+            </div>
+            
+            <!-- Auto DJ Section -->
+            <div class="auto-dj-section">
+                <div class="auto-dj-controls">
+                    <div class="auto-dj-title">Auto DJ</div>
+                    <div>
+                        <button class="btn" id="auto-dj-start">Start Auto DJ</button>
+                        <button class="btn" id="auto-dj-stop" disabled>Stop</button>
+                    </div>
+                </div>
+                <div class="style-selector">
+                    <button class="style-button active" data-style="electronic">Electronic</button>
+                    <button class="style-button" data-style="hiphop">Hip Hop</button>
+                    <button class="style-button" data-style="rock">Rock</button>
+                    <button class="style-button" data-style="pop">Pop</button>
+                </div>
+                <div class="auto-dj-queue" id="auto-dj-queue">
+                    <!-- Queue items will be added here -->
+                    <div class="queue-item">No tracks in queue</div>
+                </div>
+            </div>
+            
+            <!-- Vocal Isolation Controls -->
+            <div class="vocal-isolation-controls">
+                <div class="vocal-isolation-deck">
+                    <span class="vocal-isolation-label">Deck A Vocal Isolation:</span>
+                    <div class="vocal-isolation-toggle" id="vocal-isolation-left"></div>
+                </div>
+                <div class="vocal-isolation-deck">
+                    <span class="vocal-isolation-label">Deck B Vocal Isolation:</span>
+                    <div class="vocal-isolation-toggle" id="vocal-isolation-right"></div>
+                </div>
+            </div>
+            
+            <!-- Recommendations Section -->
+            <div class="recommendations-section">
+                <div class="recommendations-title">Smart Recommendations</div>
+                <div class="recommendation-list" id="recommendation-list">
+                    <!-- Recommendations will be added here -->
+                    <div class="recommendation-item">Select a track to see recommendations</div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,119 @@
+/* RetroMix DJ - Sample Pad Styles */
+
+/* Sample Pads */
+.sample-pads {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pad {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #222;
+    position: relative;
+    overflow: hidden;
+}
+
+.pad:hover {
+    background-color: var(--button-active);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #222;
+}
+
+.pad:active, .pad.active {
+    background-color: var(--secondary-color);
+    color: #000;
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* Loading state */
+.pad.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--highlight-color);
+    animation: loading-bar 1s infinite linear;
+}
+
+@keyframes loading-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Edit mode */
+.pad.edit-mode {
+    border: 2px dashed var(--highlight-color);
+}
+
+/* Loaded feedback */
+.pad.loaded {
+    animation: flash 0.5s;
+}
+
+@keyframes flash {
+    0% { background-color: var(--highlight-color); color: #000; }
+    100% { background-color: var(--button-color); color: var(--text-color); }
+}
+
+/* Reset feedback */
+.pad.reset {
+    animation: reset-flash 0.5s;
+}
+
+@keyframes reset-flash {
+    0% { background-color: var(--primary-color); color: #000; }
+    100% { background-color: var(--button-color); color: var(--text-color); }
+}
+
+/* Context Menu */
+.context-menu {
+    min-width: 150px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+}
+
+.context-menu-item {
+    color: var(--text-color);
+}
+
+.context-menu-item:hover {
+    background-color: var(--button-active);
+}
+
+/* Sample Pad Controls */
+.sample-pad-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.sample-pad-controls .btn {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .sample-pads {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .sample-pads {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

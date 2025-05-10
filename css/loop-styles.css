@@ -1,0 +1,188 @@
+/* RetroMix DJ - Loop and Hot Cue Styles */
+
+/* Loop Controls */
+.loop-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.loop-button {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.loop-button:hover {
+    background-color: var(--button-active);
+}
+
+.loop-button.active {
+    background-color: var(--highlight-color);
+    color: #000;
+}
+
+.loop-size-display {
+    background-color: #000;
+    color: var(--highlight-color);
+    padding: 5px;
+    border-radius: 3px;
+    min-width: 30px;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 0.9rem;
+}
+
+/* Hot Cue Buttons */
+.hot-cues {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.hot-cue {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hot-cue:hover {
+    background-color: var(--button-active);
+}
+
+.hot-cue.set {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+.hot-cue.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--highlight-color);
+}
+
+/* Waveform Loop Markers */
+.waveform-container {
+    position: relative;
+}
+
+.loop-marker {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: var(--highlight-color);
+    z-index: 2;
+}
+
+.loop-region {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 0, 0.2);
+    z-index: 1;
+}
+
+.hot-cue-marker {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid var(--primary-color);
+    z-index: 2;
+    transform: translateX(-5px);
+}
+
+/* Loop Size Controls */
+.loop-size-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.loop-size-button {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loop-size-button:hover {
+    background-color: var(--button-active);
+}
+
+/* Tooltip for Hot Cues */
+.hot-cue-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: var(--text-color);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* Enhanced Deck Controls with Loop Section */
+.deck-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deck-controls-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .hot-cues {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .loop-controls {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .hot-cues {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

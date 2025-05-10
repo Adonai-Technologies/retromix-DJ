@@ -1,0 +1,220 @@
+/* RetroMix DJ - Machine Learning Features Styles */
+
+/* AI Features Panel */
+.ai-features-panel {
+    background-color: var(--panel-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.ai-features-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ai-features-header h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: var(--highlight-color);
+    margin: 0;
+}
+
+/* Auto DJ Section */
+.auto-dj-section {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.auto-dj-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.auto-dj-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+    margin: 0;
+}
+
+.auto-dj-queue {
+    background-color: #000;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.queue-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.queue-item:last-child {
+    border-bottom: none;
+}
+
+/* Style Selector */
+.style-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.style-button {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'VT323', monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.style-button:hover {
+    background-color: var(--button-active);
+}
+
+.style-button.active {
+    background-color: var(--highlight-color);
+    color: #000;
+}
+
+/* Vocal Isolation Controls */
+.vocal-isolation-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.vocal-isolation-deck {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vocal-isolation-label {
+    font-family: 'VT323', monospace;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.vocal-isolation-toggle {
+    width: 50px;
+    height: 24px;
+    background-color: #333;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.vocal-isolation-toggle.active {
+    background-color: var(--highlight-color);
+}
+
+.vocal-isolation-toggle::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.vocal-isolation-toggle.active::after {
+    transform: translateX(26px);
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.recommendations-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+    margin: 0 0 10px 0;
+}
+
+.recommendation-list {
+    background-color: #000;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.recommendation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.recommendation-item:hover {
+    background-color: #333;
+}
+
+.recommendation-item:last-child {
+    border-bottom: none;
+}
+
+/* Loading Indicator */
+.ml-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.ml-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--highlight-color);
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .vocal-isolation-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .style-selector {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroMix DJ - Advanced Digital DJ System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loop-styles.css">
+    <link rel="stylesheet" href="css/track-library-styles.css">
+    <link rel="stylesheet" href="css/ml-features-styles.css">
+    <link rel="stylesheet" href="css/audio-processing-styles.css">
+    <link rel="stylesheet" href="css/drag-drop-styles.css">
+</head>
+<body class="theme-retro" data-layout="standard">
+    <div class="container">
+        <header>
+            <h1 class="retro-text">RetroMix DJ</h1>
+            <div class="controls-container">
+                <div class="bpm-display">
+                    <span id="bpm-value">120</span> BPM
+                </div>
+                <div class="master-controls">
+                    <button class="btn" id="sync-button" data-tooltip="Sync Decks">SYNC</button>
+                    <button class="btn" id="record-button" data-tooltip="Record Mix">REC</button>
+                    <div class="dropdown">
+                        <button class="btn" id="settings-button">SETTINGS</button>
+                        <div class="dropdown-content">
+                            <a href="#" id="theme-retro">Retro Theme</a>
+                            <a href="#" id="theme-modern">Modern Theme</a>
+                            <a href="#" id="theme-neon">Neon Theme</a>
+                            <a href="#" id="theme-minimal">Minimal Theme</a>
+                            <hr>
+                            <a href="#" id="toggle-keyboard">Keyboard Shortcuts</a>
+                            <a href="#" id="toggle-tooltips">Tooltips</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="dj-console">
+            <div class="deck deck-left">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-left">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-left"></div>
+                    </div>
+                    <div class="waveform-container">
+                        <canvas id="waveform-left"></canvas>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-left">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-left" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-left" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-left" data-tooltip="Cue">CUE</button>
+                    </div>
+                    
+                    <!-- Hot Cues Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">HOT CUES</div>
+                        <div class="hot-cues">
+                            <button class="hot-cue" id="hotcue-1-left">1</button>
+                            <button class="hot-cue" id="hotcue-2-left">2</button>
+                            <button class="hot-cue" id="hotcue-3-left">3</button>
+                            <button class="hot-cue" id="hotcue-4-left">4</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loop Controls Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">LOOP</div>
+                        <div class="loop-controls">
+                            <button class="loop-button" id="loop-in-left">IN</button>
+                            <button class="loop-button" id="loop-left">LOOP</button>
+                            <button class="loop-button" id="loop-out-left">OUT</button>
+                            <div class="loop-size-controls">
+                                <button class="loop-size-button" id="loop-size-down-left">-</button>
+                                <div class="loop-size-display" id="loop-size-left">4</div>
+                                <button class="loop-size-button" id="loop-size-up-left">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-left" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-left" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-left" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-left" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-knob-container">
+                            <div class="knob large-knob" id="filter-left" data-tooltip="Filter"></div>
+                            <label>FILTER</label>
+                        </div>
+                        <div class="filter-toggle">
+                            <button class="btn small-btn active" id="filter-lp-left">LP</button>
+                            <button class="btn small-btn" id="filter-hp-left">HP</button>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-left" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mixer">
+                <div class="crossfader-container">
+                    <input type="range" id="crossfader" min="0" max="100" value="50" class="slider" data-tooltip="Crossfader">
+                    <label>CROSSFADER</label>
+                </div>
+                <div class="visualizer-container">
+                    <div class="visualizer-type-selector">
+                        <button class="btn small-btn active" id="viz-spectrum">SPECTRUM</button>
+                        <button class="btn small-btn" id="viz-waveform">WAVE</button>
+                        <button class="btn small-btn" id="viz-circular">CIRCLE</button>
+                        <button class="btn small-btn" id="viz-3d">3D</button>
+                    </div>
+                    <canvas id="visualizer"></canvas>
+                </div>
+                <div class="effects-rack">
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <span>ECHO</span>
+                            <button class="effect-toggle" id="effect-1"></button>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="echo-time" min="0" max="100" value="50">
+                                <label>TIME</label>
+                            </div>
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="echo-feedback" min="0" max="100" value="60">
+                                <label>FDBK</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <span>FILTER</span>
+                            <button class="effect-toggle" id="effect-2"></button>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="filter-freq" min="0" max="100" value="50">
+                                <label>FREQ</label>
+                            </div>
+                            <div class="effect-param">
+                                <input type="range" class="param-slider" id="filter-res" min="0" max="100" value="20">
+                                <label>RES</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="deck deck-right">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-right">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-right"></div>
+                    </div>
+                    <div class="waveform-container">
+                        <canvas id="waveform-right"></canvas>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-right">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-right" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-right" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-right" data-tooltip="Cue">CUE</button>
+                    </div>
+                    
+                    <!-- Hot Cues Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">HOT CUES</div>
+                        <div class="hot-cues">
+                            <button class="hot-cue" id="hotcue-1-right">1</button>
+                            <button class="hot-cue" id="hotcue-2-right">2</button>
+                            <button class="hot-cue" id="hotcue-3-right">3</button>
+                            <button class="hot-cue" id="hotcue-4-right">4</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loop Controls Section -->
+                    <div class="deck-controls-section">
+                        <div class="section-title">LOOP</div>
+                        <div class="loop-controls">
+                            <button class="loop-button" id="loop-in-right">IN</button>
+                            <button class="loop-button" id="loop-right">LOOP</button>
+                            <button class="loop-button" id="loop-out-right">OUT</button>
+                            <div class="loop-size-controls">
+                                <button class="loop-size-button" id="loop-size-down-right">-</button>
+                                <div class="loop-size-display" id="loop-size-right">4</div>
+                                <button class="loop-size-button" id="loop-size-up-right">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-right" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-right" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-right" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-right" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-knob-container">
+                            <div class="knob large-knob" id="filter-right" data-tooltip="Filter"></div>
+                            <label>FILTER</label>
+                        </div>
+                        <div class="filter-toggle">
+                            <button class="btn small-btn active" id="filter-lp-right">LP</button>
+                            <button class="btn small-btn" id="filter-hp-right">HP</button>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-right" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sample-pad-controls">
+            <button class="btn" id="edit-samples-btn">Edit Samples</button>
+            <button class="btn" id="reset-samples-btn">Reset All Samples</button>
+        </div>
+        
+        <div class="sample-pads">
+            <div class="pad" id="pad-1" data-tooltip="Beat 1">BEAT 1</div>
+            <div class="pad" id="pad-2" data-tooltip="Beat 2">BEAT 2</div>
+            <div class="pad" id="pad-3" data-tooltip="Vocal">VOCAL</div>
+            <div class="pad" id="pad-4" data-tooltip="Horn">HORN</div>
+            <div class="pad" id="pad-5" data-tooltip="Scratch">SCRATCH</div>
+            <div class="pad" id="pad-6" data-tooltip="Drop">DROP</div>
+            <div class="pad" id="pad-7" data-tooltip="Siren">SIREN</div>
+            <div class="pad" id="pad-8" data-tooltip="Noise">NOISE</div>
+        </div>
+        
+        <!-- AI Features Panel -->
+        <div class="ai-features-panel">
+            <div class="ai-features-header">
+                <h3>AI Features</h3>
+            </div>
+            
+            <!-- Auto DJ Section -->
+            <div class="auto-dj-section">
+                <div class="auto-dj-controls">
+                    <div class="auto-dj-title">Auto DJ</div>
+                    <div>
+                        <button class="btn" id="auto-dj-start">Start Auto DJ</button>
+                        <button class="btn" id="auto-dj-stop" disabled>Stop</button>
+                    </div>
+                </div>
+                <div class="style-selector">
+                    <button class="style-button active" data-style="electronic">Electronic</button>
+                    <button class="style-button" data-style="hiphop">Hip Hop</button>
+                    <button class="style-button" data-style="rock">Rock</button>
+                    <button class="style-button" data-style="pop">Pop</button>
+                </div>
+                <div class="auto-dj-queue" id="auto-dj-queue">
+                    <!-- Queue items will be added here -->
+                    <div class="queue-item">No tracks in queue</div>
+                </div>
+            </div>
+            
+            <!-- Vocal Isolation Controls -->
+            <div class="vocal-isolation-controls">
+                <div class="vocal-isolation-deck">
+                    <span class="vocal-isolation-label">Deck A Vocal Isolation:</span>
+                    <div class="vocal-isolation-toggle" id="vocal-isolation-left"></div>
+                </div>
+                <div class="vocal-isolation-deck">
+                    <span class="vocal-isolation-label">Deck B Vocal Isolation:</span>
+                    <div class="vocal-isolation-toggle" id="vocal-isolation-right"></div>
+                </div>
+            </div>
+            
+            <!-- Recommendations Section -->
+            <div class="recommendations-section">
+                <div class="recommendations-title">Smart Recommendations</div>
+                <div class="recommendation-list" id="recommendation-list">
+                    <!-- Recommendations will be added here -->
+                    <div class="recommendation-item">Select a track to see recommendations</div>
+                </div>
+            </div>
+        </div>
+        <!-- Advanced Audio Processing Panel -->
+        <div class="effects-panel">
+            <div class="effects-header">
+                <h3>Advanced Audio Processing</h3>
+            </div>
+            
+            <div class="effects-tabs">
+                <button class="effects-tab active" data-tab="effects">Effects</button>
+                <button class="effects-tab" data-tab="compression">Compression</button>
+                <button class="effects-tab" data-tab="sidechain">Sidechain</button>
+            </div>
+            
+            <!-- Effects Tab -->
+            <div class="effects-content active" id="effects-tab">
+                <div class="deck-selector">
+                    <button class="deck-button active" data-deck="left">Deck A</button>
+                    <button class="deck-button" data-deck="right">Deck B</button>
+                </div>
+                
+                <div class="effect-controls" id="left-effects">
+                    <!-- Reverb -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Reverb</div>
+                            <div class="effect-toggle" id="reverb-toggle-left"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Decay</div>
+                                <input type="range" class="param-slider" id="reverb-decay-left" min="0.1" max="10" step="0.1" value="2">
+                                <div class="param-value">2.0s</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Pre-Delay</div>
+                                <input type="range" class="param-slider" id="reverb-predelay-left" min="0" max="0.1" step="0.001" value="0.01">
+                                <div class="param-value">10ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="reverb-mix-left" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delay -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Delay</div>
+                            <div class="effect-toggle" id="delay-toggle-left"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Time</div>
+                                <input type="range" class="param-slider" id="delay-time-left" min="0.05" max="2" step="0.01" value="0.5">
+                                <div class="param-value">500ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Feedback</div>
+                                <input type="range" class="param-slider" id="delay-feedback-left" min="0" max="0.95" step="0.01" value="0.4">
+                                <div class="param-value">40%</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="delay-mix-left" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flanger -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Flanger</div>
+                            <div class="effect-toggle" id="flanger-toggle-left"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Rate</div>
+                                <input type="range" class="param-slider" id="flanger-rate-left" min="0.05" max="5" step="0.01" value="0.2">
+                                <div class="param-value">0.2Hz</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Depth</div>
+                                <input type="range" class="param-slider" id="flanger-depth-left" min="0.1" max="10" step="0.1" value="5">
+                                <div class="param-value">5ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Feedback</div>
+                                <input type="range" class="param-slider" id="flanger-feedback-left" min="0" max="0.9" step="0.01" value="0.5">
+                                <div class="param-value">50%</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="flanger-mix-left" min="0" max="1" step="0.01" value="0.5">
+                                <div class="param-value">50%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distortion -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Distortion</div>
+                            <div class="effect-toggle" id="distortion-toggle-left"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Amount</div>
+                                <input type="range" class="param-slider" id="distortion-amount-left" min="1" max="100" step="1" value="10">
+                                <div class="param-value">10</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="distortion-mix-left" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="effect-controls" id="right-effects" style="display: none;">
+                    <!-- Reverb -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Reverb</div>
+                            <div class="effect-toggle" id="reverb-toggle-right"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Decay</div>
+                                <input type="range" class="param-slider" id="reverb-decay-right" min="0.1" max="10" step="0.1" value="2">
+                                <div class="param-value">2.0s</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Pre-Delay</div>
+                                <input type="range" class="param-slider" id="reverb-predelay-right" min="0" max="0.1" step="0.001" value="0.01">
+                                <div class="param-value">10ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="reverb-mix-right" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delay -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Delay</div>
+                            <div class="effect-toggle" id="delay-toggle-right"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Time</div>
+                                <input type="range" class="param-slider" id="delay-time-right" min="0.05" max="2" step="0.01" value="0.5">
+                                <div class="param-value">500ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Feedback</div>
+                                <input type="range" class="param-slider" id="delay-feedback-right" min="0" max="0.95" step="0.01" value="0.4">
+                                <div class="param-value">40%</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="delay-mix-right" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flanger -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Flanger</div>
+                            <div class="effect-toggle" id="flanger-toggle-right"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Rate</div>
+                                <input type="range" class="param-slider" id="flanger-rate-right" min="0.05" max="5" step="0.01" value="0.2">
+                                <div class="param-value">0.2Hz</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Depth</div>
+                                <input type="range" class="param-slider" id="flanger-depth-right" min="0.1" max="10" step="0.1" value="5">
+                                <div class="param-value">5ms</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Feedback</div>
+                                <input type="range" class="param-slider" id="flanger-feedback-right" min="0" max="0.9" step="0.01" value="0.5">
+                                <div class="param-value">50%</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="flanger-mix-right" min="0" max="1" step="0.01" value="0.5">
+                                <div class="param-value">50%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Distortion -->
+                    <div class="effect-unit">
+                        <div class="effect-header">
+                            <div class="effect-title">Distortion</div>
+                            <div class="effect-toggle" id="distortion-toggle-right"></div>
+                        </div>
+                        <div class="effect-params">
+                            <div class="effect-param">
+                                <div class="param-label">Amount</div>
+                                <input type="range" class="param-slider" id="distortion-amount-right" min="1" max="100" step="1" value="10">
+                                <div class="param-value">10</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Mix</div>
+                                <input type="range" class="param-slider" id="distortion-mix-right" min="0" max="1" step="0.01" value="0.3">
+                                <div class="param-value">30%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compression Tab -->
+            <div class="effects-content" id="compression-tab">
+                <div class="deck-selector">
+                    <button class="deck-button active" data-deck="left">Deck A</button>
+                    <button class="deck-button" data-deck="right">Deck B</button>
+                </div>
+                
+                <div class="compressor-controls" id="left-compressor">
+                    <div class="compressor-header">
+                        <div class="compressor-title">Multiband Compressor</div>
+                        <div class="compressor-toggle" id="compressor-toggle-left"></div>
+                    </div>
+                    
+                    <div class="compressor-bands">
+                        <!-- Low Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">Low Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="low-threshold-left" min="-60" max="0" step="1" value="-24">
+                                    <div class="param-value">-24dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="low-ratio-left" min="1" max="20" step="0.1" value="4">
+                                    <div class="param-value">4:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="low-gain-left" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mid Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">Mid Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="mid-threshold-left" min="-60" max="0" step="1" value="-18">
+                                    <div class="param-value">-18dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="mid-ratio-left" min="1" max="20" step="0.1" value="3">
+                                    <div class="param-value">3:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="mid-gain-left" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- High Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">High Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="high-threshold-left" min="-60" max="0" step="1" value="-12">
+                                    <div class="param-value">-12dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="high-ratio-left" min="1" max="20" step="0.1" value="2">
+                                    <div class="param-value">2:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="high-gain-left" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Limiter -->
+                    <div class="limiter-controls">
+                        <div class="band-header">
+                            <div class="band-title">Limiter</div>
+                        </div>
+                        <div class="band-params">
+                            <div class="effect-param">
+                                <div class="param-label">Threshold</div>
+                                <input type="range" class="param-slider" id="limiter-threshold-left" min="-12" max="0" step="0.1" value="-0.5">
+                                <div class="param-value">-0.5dB</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Output Gain</div>
+                                <input type="range" class="param-slider" id="limiter-gain-left" min="0" max="2" step="0.01" value="1">
+                                <div class="param-value">0dB</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="compressor-controls" id="right-compressor" style="display: none;">
+                    <!-- Similar structure for right deck compressor -->
+                    <div class="compressor-header">
+                        <div class="compressor-title">Multiband Compressor</div>
+                        <div class="compressor-toggle" id="compressor-toggle-right"></div>
+                    </div>
+                    
+                    <div class="compressor-bands">
+                        <!-- Low Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">Low Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="low-threshold-right" min="-60" max="0" step="1" value="-24">
+                                    <div class="param-value">-24dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="low-ratio-right" min="1" max="20" step="0.1" value="4">
+                                    <div class="param-value">4:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="low-gain-right" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mid Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">Mid Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="mid-threshold-right" min="-60" max="0" step="1" value="-18">
+                                    <div class="param-value">-18dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="mid-ratio-right" min="1" max="20" step="0.1" value="3">
+                                    <div class="param-value">3:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="mid-gain-right" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- High Band -->
+                        <div class="compressor-band">
+                            <div class="band-header">
+                                <div class="band-title">High Band</div>
+                            </div>
+                            <div class="band-params">
+                                <div class="effect-param">
+                                    <div class="param-label">Threshold</div>
+                                    <input type="range" class="param-slider" id="high-threshold-right" min="-60" max="0" step="1" value="-12">
+                                    <div class="param-value">-12dB</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Ratio</div>
+                                    <input type="range" class="param-slider" id="high-ratio-right" min="1" max="20" step="0.1" value="2">
+                                    <div class="param-value">2:1</div>
+                                </div>
+                                <div class="effect-param">
+                                    <div class="param-label">Gain</div>
+                                    <input type="range" class="param-slider" id="high-gain-right" min="0" max="2" step="0.01" value="1">
+                                    <div class="param-value">0dB</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Limiter -->
+                    <div class="limiter-controls">
+                        <div class="band-header">
+                            <div class="band-title">Limiter</div>
+                        </div>
+                        <div class="band-params">
+                            <div class="effect-param">
+                                <div class="param-label">Threshold</div>
+                                <input type="range" class="param-slider" id="limiter-threshold-right" min="-12" max="0" step="0.1" value="-0.5">
+                                <div class="param-value">-0.5dB</div>
+                            </div>
+                            <div class="effect-param">
+                                <div class="param-label">Output Gain</div>
+                                <input type="range" class="param-slider" id="limiter-gain-right" min="0" max="2" step="0.01" value="1">
+                                <div class="param-value">0dB</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidechain Tab -->
+            <div class="effects-content" id="sidechain-tab">
+                <div class="sidechain-controls">
+                    <div class="sidechain-header">
+                        <div class="sidechain-title">Sidechain Compression</div>
+                        <div class="sidechain-toggle" id="sidechain-toggle"></div>
+                    </div>
+                    
+                    <div class="sidechain-options">
+                        <div class="sidechain-option">
+                            <div class="param-label">Source</div>
+                            <select id="sidechain-source" class="param-select">
+                                <option value="left">Deck A</option>
+                                <option value="right">Deck B</option>
+                            </select>
+                        </div>
+                        <div class="sidechain-option">
+                            <div class="param-label">Target</div>
+                            <select id="sidechain-target" class="param-select">
+                                <option value="right">Deck B</option>
+                                <option value="left">Deck A</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="sidechain-params">
+                        <div class="effect-param">
+                            <div class="param-label">Amount</div>
+                            <input type="range" class="param-slider" id="sidechain-amount" min="0" max="1" step="0.01" value="0.5">
+                            <div class="param-value">50%</div>
+                        </div>
+                        <div class="effect-param">
+                            <div class="param-label">Release</div>
+                            <input type="range" class="param-slider" id="sidechain-release" min="0.05" max="1" step="0.01" value="0.2">
+                            <div class="param-value">200ms</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Track Library Section -->
+        <div class="track-browser">
+            <div class="track-browser-header">
+                <div class="drag-drop-info">Drag & drop audio files here</div>
+                <h3>Track Library</h3>
+                <div class="library-controls">
+                    <button class="btn" id="create-playlist-btn">New Playlist</button>
+                    <button class="btn" id="import-library-btn">Import</button>
+                    <button class="btn" id="export-library-btn">Export</button>
+                </div>
+                <div class="track-search">
+                    <input type="text" id="track-search" placeholder="Search tracks...">
+                </div>
+                <div class="playlist-selector">
+                    <select id="playlist-selector">
+                        <option value="">All Tracks</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="recent">Recently Played</option>
+                    </select>
+                </div>
+            </div>
+            <div class="track-list" id="track-list">
+                <!-- Tracks will be loaded here -->
+            </div>
+        </div>
+        
+        <footer>
+            <div class="credits">
+                <p>RetroMix DJ - Advanced Digital DJ System</p>
+                <p>Created for the "That's Entertainment!" Challenge</p>
+                <p>Built with Amazon Q Developer</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dialogs -->
+    <div id="file-dialog" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Load Audio File</h2>
+            <input type="file" id="audio-file-input" accept="audio/*">
+            <button id="load-file-btn" class="btn">Load</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/workers/beat-detection-worker.js"></script>
+    <script src="js/audio-engine.js"></script>
+    <script src="js/audio-engine-loop.js"></script>
+    <script src="js/beat-manager.js"></script>
+    <script src="js/waveform-display.js"></script>
+    <script src="js/waveform-display-loop.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/ui-controller.js"></script>
+    <script src="js/ui-controller-loop.js"></script>
+    <script src="js/loop-system.js"></script>
+    <script src="js/sample-manager.js"></script>
+    <script src="js/sample-pad-controller.js"></script>
+    <script src="js/track-metadata-extractor.js"></script>
+    <script src="js/track-library-manager.js"></script>
+    <script src="js/track-library-ui.js"></script>
+    <script src="js/ml-features.js"></script>
+    <script src="js/drag-drop-storage.js"></script>
+    <script src="js/advanced-audio-processor.js"></script>
+    <script src="js/audio-processing-ui.js"></script>
+    <script>
+        // Initialize application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create audio context on user interaction to comply with autoplay policies
+            const startButton = document.createElement('button');
+            startButton.textContent = 'START RETROMIX DJ';
+            startButton.className = 'start-button';
+            startButton.addEventListener('click', () => {
+                try {
+                    // Remove start button
+                    document.body.removeChild(startButton);
+                    
+                    // Show loading message
+                    const loadingMessage = document.createElement('div');
+                    loadingMessage.textContent = 'Loading...';
+                    loadingMessage.className = 'loading-message';
+                    document.body.appendChild(loadingMessage);
+                    
+                    // Initialize app after a short delay to show loading animation
+                    setTimeout(() => {
+                        try {
+                            document.body.removeChild(loadingMessage);
+                            
+                            // Initialize components
+                            const audioEngine = new AudioEngine();
+                            const beatManager = new BeatManager(audioEngine);
+                            const waveformDisplay = new WaveformDisplay(audioEngine, beatManager);
+                            const visualizer = new Visualizer(audioEngine);
+                            const uiController = new UIController(audioEngine, visualizer);
+                            const loopSystem = new LoopSystem(audioEngine, waveformDisplay);
+                            const sampleManager = new SampleManager(audioEngine);
+                            const samplePadController = new SamplePadController(sampleManager);
+                            const metadataExtractor = new TrackMetadataExtractor();
+                            const libraryManager = new TrackLibraryManager();
+                            const libraryUI = new TrackLibraryUI(libraryManager);
+                            const mlFeatures = new MLFeatures(audioEngine, libraryManager);
+                            
+                            // Store in global app object
+                            window.app = {
+                                audioEngine,
+                                beatManager,
+                                waveformDisplay,
+                                visualizer,
+                                uiController,
+                                loopSystem,
+                                sampleManager,
+                                samplePadController,
+                                metadataExtractor,
+                                libraryManager,
+                                libraryUI,
+                                mlFeatures,
+                                keyboardShortcutsEnabled: true,
+                                tooltipsEnabled: true
+                            };
+                            
+                            // Initialize visualizers
+                            visualizer.initVisualizer('visualizer', 'spectrum');
+                            
+                            // Initialize waveform displays
+                            waveformDisplay.initDisplay('left', 'waveform-left');
+                            waveformDisplay.initDisplay('right', 'waveform-right');
+                            
+                            // Initialize loop and hot cue UI
+                            uiController.initializeLoopAndHotCueUI();
+                            
+                            // Load default samples
+                            sampleManager.loadDefaultSamples().then(count => {
+                                console.log(`Loaded ${count} samples`);
+                            });
+                            
+                            // Set up sample pad controls
+                            document.getElementById('edit-samples-btn').addEventListener('click', () => {
+                                const isEditMode = samplePadController.toggleEditMode();
+                                document.getElementById('edit-samples-btn').textContent = 
+                                    isEditMode ? 'Done Editing' : 'Edit Samples';
+                            });
+                            
+                            document.getElementById('reset-samples-btn').addEventListener('click', () => {
+                                if (confirm('Reset all samples to default?')) {
+                                    sampleManager.loadDefaultSamples();
+                                }
+                            });
+                            
+                            // Listen for track loading from library
+                            document.addEventListener('loadtrackfromlibrary', (e) => {
+                                const { trackId, deckId } = e.detail;
+                                const track = libraryManager.getTrack(trackId);
+                                if (track) {
+                                    // In a real implementation, we would load the track file here
+                                    console.log(`Loading track ${track.title} to ${deckId} deck`);
+                                    
+                                    // Update UI
+                                    uiController.updateTrackInfo(deckId, `${track.artist} - ${track.title}`);
+                                    
+                                    // Add to history
+                                    libraryManager.addTrackToHistory(trackId, deckId);
+                                }
+                            });
+                            
+                            // Set up theme selectors
+                            document.getElementById('theme-retro').addEventListener('click', () => {
+                                setTheme('retro');
+                            });
+                            
+                            document.getElementById('theme-modern').addEventListener('click', () => {
+                                setTheme('modern');
+                            });
+                            
+                            document.getElementById('theme-neon').addEventListener('click', () => {
+                                setTheme('neon');
+                            });
+                            
+                            document.getElementById('theme-minimal').addEventListener('click', () => {
+                                setTheme('minimal');
+                            });
+                            
+                            // Toggle keyboard shortcuts
+                            document.getElementById('toggle-keyboard').addEventListener('click', () => {
+                                const enabled = !window.app.keyboardShortcutsEnabled;
+                                window.app.keyboardShortcutsEnabled = enabled;
+                                document.getElementById('toggle-keyboard').textContent = 
+                                    `Keyboard Shortcuts: ${enabled ? 'ON' : 'OFF'}`;
+                                console.log(`Keyboard shortcuts ${enabled ? 'enabled' : 'disabled'}`);
+                            });
+                            
+                            // Toggle tooltips
+                            document.getElementById('toggle-tooltips').addEventListener('click', () => {
+                                const enabled = !window.app.tooltipsEnabled;
+                                window.app.tooltipsEnabled = enabled;
+                                document.getElementById('toggle-tooltips').textContent = 
+                                    `Tooltips: ${enabled ? 'ON' : 'OFF'}`;
+                                console.log(`Tooltips ${enabled ? 'enabled' : 'disabled'}`);
+                            });
+                            
+                            // Set up AI features
+                            document.getElementById('auto-dj-start').addEventListener('click', () => {
+                                mlFeatures.startAutoDJ();
+                                document.getElementById('auto-dj-start').disabled = true;
+                                document.getElementById('auto-dj-stop').disabled = false;
+                            });
+                            
+                            document.getElementById('auto-dj-stop').addEventListener('click', () => {
+                                mlFeatures.stopAutoDJ();
+                                document.getElementById('auto-dj-start').disabled = false;
+                                document.getElementById('auto-dj-stop').disabled = true;
+                            });
+                            
+                            // Style selector buttons
+                            document.querySelectorAll('.style-button').forEach(button => {
+                                button.addEventListener('click', () => {
+                                    const style = button.dataset.style;
+                                    mlFeatures.setCurrentStyle(style);
+                                    
+                                    // Update UI
+                                    document.querySelectorAll('.style-button').forEach(btn => {
+                                        btn.classList.remove('active');
+                                    });
+                                    button.classList.add('active');
+                                });
+                            });
+                            
+                            // Vocal isolation toggles
+                            document.getElementById('vocal-isolation-left').addEventListener('click', () => {
+                                const enabled = mlFeatures.toggleVocalIsolation('left');
+                                if (enabled) {
+                                    document.getElementById('vocal-isolation-left').classList.add('active');
+                                } else {
+                                    document.getElementById('vocal-isolation-left').classList.remove('active');
+                                }
+                            });
+                            
+                            document.getElementById('vocal-isolation-right').addEventListener('click', () => {
+                                const enabled = mlFeatures.toggleVocalIsolation('right');
+                                if (enabled) {
+                                    document.getElementById('vocal-isolation-right').classList.add('active');
+                                } else {
+                                    document.getElementById('vocal-isolation-right').classList.remove('active');
+                                }
+                            });
+                            
+                            // Listen for track selection to show recommendations
+                            document.addEventListener('trackselected', (e) => {
+                                const { trackId } = e.detail;
+                                const recommendations = mlFeatures.getTrackRecommendations(trackId, 5);
+                                
+                                // Update recommendations UI
+                                const recommendationList = document.getElementById('recommendation-list');
+                                recommendationList.innerHTML = '';
+                                
+                                if (recommendations.length === 0) {
+                                    recommendationList.innerHTML = '<div class="recommendation-item">No recommendations available</div>';
+                                    return;
+                                }
+                                
+                                recommendations.forEach(track => {
+                                    const item = document.createElement('div');
+                                    item.className = 'recommendation-item';
+                                    item.innerHTML = `
+                                        <div class="recommendation-info">
+                                            <div class="recommendation-title">${track.title}</div>
+                                            <div class="recommendation-details">${track.artist} • ${track.bpm || '?'} BPM</div>
+                                        </div>
+                                    `;
+                                    
+                                    item.addEventListener('click', () => {
+                                        // Load track to inactive deck
+                                        const leftDeckActive = audioEngine.decks.left.isPlaying;
+                                        const targetDeck = leftDeckActive ? 'right' : 'left';
+                                        
+                                        // Dispatch event to load track
+                                        const event = new CustomEvent('loadtrackfromlibrary', {
+                                            detail: {
+                                                trackId: track.id,
+                                                deckId: targetDeck
+                                            }
+                                        });
+                                        document.dispatchEvent(event);
+                                    });
+                                    
+                                    recommendationList.appendChild(item);
+                                });
+                            });
+                            // Initialize drag and drop and enhanced storage
+                            setupTrackBrowserDragAndDrop();
+                            initializeAdvancedAudioProcessing();
+                            enhanceLocalStorage();
+                            addDragHighlightStyles();
+                            
+                            // Add drag and drop instructions to track browser
+                            const trackList = document.getElementById('track-list');
+                            if (trackList && trackList.innerHTML.trim() === '') {
+                                trackList.innerHTML = '<div class="empty-message">Drag and drop audio files here to add them to your library</div>';
+                            }
+                            console.log('RetroMix DJ initialized with all features');
+                            
+                            // Theme switching function
+                            function setTheme(theme) {
+                                document.body.className = `theme-${theme}`;
+                                console.log(`Theme set to: ${theme}`);
+                            }
+                        } catch (error) {
+                            console.error('Error initializing app:', error);
+                            alert('Error initializing app: ' + error.message);
+                        }
+                    }, 1000);
+                } catch (error) {
+                    console.error('Error starting app:', error);
+                    alert('Error starting app: ' + error.message);
+                }
+            });
+            
+            document.body.appendChild(startButton);
+        });
+
+        // Add styles for start button and loading message
+        const style = document.createElement('style');
+        style.textContent = `
+            .start-button {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px 40px;
+                font-family: 'Press Start 2P', cursive;
+                font-size: 1.5rem;
+                background-color: #ff00ff;
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 0 0 20px #00ffff;
+                z-index: 1000;
+                animation: pulse 1.5s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { transform: translate(-50%, -50%) scale(1); }
+                50% { transform: translate(-50%, -50%) scale(1.05); }
+                100% { transform: translate(-50%, -50%) scale(1); }
+            }
+            
+            .loading-message {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Press Start 2P', cursive;
+                font-size: 2rem;
+                color: #00ffff;
+                z-index: 1000;
+                animation: blink 1s infinite;
+            }
+            
+            @keyframes blink {
+                0% { opacity: 1; }
+                50% { opacity: 0.5; }
+                100% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

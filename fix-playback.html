@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroMix DJ - Fixed Version</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .instructions {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ff00ff;
+        }
+        .instructions h2 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+        .instructions ol {
+            margin-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        .simple-deck {
+            background-color: var(--panel-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .simple-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .track-display {
+            background-color: #000;
+            color: var(--highlight-color);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            min-height: 40px;
+            border: 1px solid var(--secondary-color);
+        }
+        .debug-info {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="theme-retro">
+    <div class="container">
+        <header>
+            <h1 class="retro-text">RetroMix DJ - Fixed Version</h1>
+        </header>
+        
+        <div class="instructions">
+            <h2>How to Use This Fixed Version</h2>
+            <ol>
+                <li>Click the "Start Audio" button first to initialize the audio context</li>
+                <li>Click "Load Track" to select an audio file from your computer</li>
+                <li>Once loaded, click "Play" to start playback</li>
+                <li>The debug info section will show you what's happening behind the scenes</li>
+            </ol>
+        </div>
+        
+        <div class="simple-deck">
+            <div class="track-display" id="track-info">No track loaded</div>
+            <div class="simple-controls">
+                <button class="btn" id="start-audio">Start Audio</button>
+                <button class="btn" id="load-track">Load Track</button>
+                <button class="btn" id="play-track">Play</button>
+                <button class="btn" id="stop-track">Stop</button>
+            </div>
+            <div class="debug-info" id="debug-info">Debug information will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        // Simple audio player with detailed logging
+        class SimpleAudioPlayer {
+            constructor() {
+                this.audioContext = null;
+                this.source = null;
+                this.gainNode = null;
+                this.buffer = null;
+                this.isPlaying = false;
+                this.startTime = 0;
+                this.pauseTime = 0;
+                this.trackInfo = document.getElementById('track-info');
+                this.debugInfo = document.getElementById('debug-info');
+                
+                this.setupEventListeners();
+                this.log('Simple Audio Player initialized');
+            }
+            
+            setupEventListeners() {
+                document.getElementById('start-audio').addEventListener('click', () => {
+                    this.initAudioContext();
+                });
+                
+                document.getElementById('load-track').addEventListener('click', () => {
+                    this.openFileDialog();
+                });
+                
+                document.getElementById('play-track').addEventListener('click', () => {
+                    this.togglePlay();
+                });
+                
+                document.getElementById('stop-track').addEventListener('click', () => {
+                    this.stop();
+                });
+            }
+            
+            log(message) {
+                console.log(message);
+                const timestamp = new Date().toLocaleTimeString();
+                this.debugInfo.textContent += `[${timestamp}] ${message}\n`;
+                this.debugInfo.scrollTop = this.debugInfo.scrollHeight;
+            }
+            
+            initAudioContext() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.gainNode = this.audioContext.createGain();
+                    this.gainNode.connect(this.audioContext.destination);
+                    this.log(`Audio context initialized: ${this.audioContext.state}`);
+                    
+                    if (this.audioContext.state === 'suspended') {
+                        this.audioContext.resume().then(() => {
+                            this.log(`Audio context resumed: ${this.audioContext.state}`);
+                        });
+                    }
+                } catch (error) {
+                    this.log(`Error initializing audio context: ${error.message}`);
+                }
+            }
+            
+            openFileDialog() {
+                if (!this.audioContext) {
+                    this.log('Please start audio first');
+                    alert('Please click "Start Audio" first');
+                    return;
+                }
+                
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'audio/*';
+                
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        this.loadFile(file);
+                    }
+                };
+                
+                input.click();
+            }
+            
+            async loadFile(file) {
+                this.log(`Loading file: ${file.name} (${file.type})`);
+                this.trackInfo.textContent = `Loading: ${file.name}...`;
+                
+                try {
+                    const arrayBuffer = await this.readFileAsArrayBuffer(file);
+                    this.log(`File read successfully, size: ${arrayBuffer.byteLength} bytes`);
+                    
+                    this.audioContext.decodeAudioData(arrayBuffer, 
+                        (buffer) => {
+                            this.buffer = buffer;
+                            this.log(`Audio decoded successfully, duration: ${buffer.duration.toFixed(2)} seconds`);
+                            this.trackInfo.textContent = file.name;
+                        },
+                        (error) => {
+                            this.log(`Error decoding audio data: ${error}`);
+                            this.trackInfo.textContent = 'Error loading track';
+                        }
+                    );
+                } catch (error) {
+                    this.log(`Error loading file: ${error.message}`);
+                    this.trackInfo.textContent = 'Error loading track';
+                }
+            }
+            
+            readFileAsArrayBuffer(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        resolve(e.target.result);
+                    };
+                    
+                    reader.onerror = (error) => {
+                        reject(error);
+                    };
+                    
+                    reader.readAsArrayBuffer(file);
+                });
+            }
+            
+            togglePlay() {
+                if (!this.audioContext) {
+                    this.log('Please start audio first');
+                    alert('Please click "Start Audio" first');
+                    return;
+                }
+                
+                if (!this.buffer) {
+                    this.log('No track loaded');
+                    alert('Please load a track first');
+                    return;
+                }
+                
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            }
+            
+            play() {
+                this.log('Starting playback');
+                
+                // If already playing, stop first
+                if (this.source) {
+                    this.source.stop();
+                }
+                
+                // Create new source
+                this.source = this.audioContext.createBufferSource();
+                this.source.buffer = this.buffer;
+                this.source.connect(this.gainNode);
+                
+                // Calculate start position
+                let startPosition = 0;
+                if (this.pauseTime > 0) {
+                    startPosition = this.pauseTime;
+                }
+                
+                // Start playback
+                this.source.start(0, startPosition);
+                this.startTime = this.audioContext.currentTime - startPosition;
+                this.isPlaying = true;
+                
+                document.getElementById('play-track').textContent = 'Pause';
+                
+                this.log(`Playback started at position: ${startPosition.toFixed(2)}`);
+                
+                // Handle track end
+                this.source.onended = () => {
+                    if (this.isPlaying) {
+                        this.log('Track ended');
+                        this.isPlaying = false;
+                        this.pauseTime = 0;
+                        document.getElementById('play-track').textContent = 'Play';
+                    }
+                };
+            }
+            
+            pause() {
+                if (!this.isPlaying || !this.source) {
+                    return;
+                }
+                
+                // Calculate current position
+                this.pauseTime = this.getCurrentTime();
+                
+                // Stop source
+                this.source.stop();
+                this.source = null;
+                this.isPlaying = false;
+                
+                document.getElementById('play-track').textContent = 'Play';
+                
+                this.log(`Playback paused at position: ${this.pauseTime.toFixed(2)}`);
+            }
+            
+            stop() {
+                if (this.source) {
+                    this.source.stop();
+                    this.source = null;
+                }
+                
+                this.isPlaying = false;
+                this.pauseTime = 0;
+                
+                document.getElementById('play-track').textContent = 'Play';
+                
+                this.log('Playback stopped');
+            }
+            
+            getCurrentTime() {
+                if (!this.isPlaying) {
+                    return this.pauseTime;
+                }
+                
+                return this.audioContext.currentTime - this.startTime;
+            }
+        }
+        
+        // Initialize player when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.player = new SimpleAudioPlayer();
+        });
+    </script>
+</body>
+</html>

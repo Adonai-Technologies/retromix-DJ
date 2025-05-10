@@ -1,0 +1,240 @@
+/* RetroMix DJ - Track Library Styles */
+
+/* Track Browser */
+.track-browser {
+    background-color: var(--panel-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.track-browser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.track-browser h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: var(--highlight-color);
+    margin: 0;
+}
+
+.track-search {
+    flex: 1;
+    min-width: 200px;
+}
+
+.track-search input {
+    width: 100%;
+    background-color: #000;
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    padding: 8px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.playlist-selector select {
+    background-color: #000;
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    padding: 8px;
+    border-radius: 5px;
+    font-family: inherit;
+    min-width: 150px;
+}
+
+.track-list {
+    background-color: #000;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Track Items */
+.track-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.track-item:hover {
+    background-color: #333;
+}
+
+.track-item:last-child {
+    border-bottom: none;
+}
+
+.track-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.track-title {
+    font-weight: bold;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    color: #aaa;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-details {
+    color: #777;
+    font-size: 0.8em;
+}
+
+.track-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.small-btn {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    min-width: 30px;
+}
+
+.icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.icon-btn.active {
+    background-color: var(--highlight-color);
+    color: #000;
+}
+
+/* Empty Message */
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+}
+
+/* Library Controls */
+.library-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.library-controls .btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+}
+
+/* Context Menu */
+.context-menu {
+    min-width: 180px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    z-index: 1000;
+}
+
+.context-menu-item {
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.context-menu-item:hover {
+    background-color: var(--button-active);
+}
+
+/* Playlist List */
+.playlist-list {
+    background-color: #000;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    margin: 10px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.playlist-item {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.playlist-item:hover {
+    background-color: #333;
+}
+
+.playlist-item:last-child {
+    border-bottom: none;
+}
+
+.playlist-item.in-playlist {
+    color: #666;
+    cursor: default;
+}
+
+/* Form Fields */
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--highlight-color);
+}
+
+.form-field input {
+    width: 100%;
+    background-color: #000;
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    padding: 8px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .track-browser-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .track-search, .playlist-selector {
+        width: 100%;
+    }
+    
+    .track-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .track-actions {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+}

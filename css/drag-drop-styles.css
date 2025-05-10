@@ -1,0 +1,102 @@
+/* RetroMix DJ - Drag and Drop Styles */
+
+.drag-drop-info {
+    color: var(--secondary-color);
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    text-align: center;
+    display: none;
+}
+
+.track-browser:hover .drag-drop-info {
+    display: block;
+}
+
+.drag-highlight {
+    border: 2px dashed var(--highlight-color) !important;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.drag-highlight .drag-drop-info {
+    display: block;
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+
+/* Empty library message */
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+/* File upload progress */
+.upload-progress {
+    height: 4px;
+    background-color: var(--secondary-color);
+    width: 0%;
+    transition: width 0.3s;
+    margin-top: 5px;
+}
+
+.upload-progress.complete {
+    background-color: var(--highlight-color);
+}
+
+/* File upload notification */
+.upload-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--panel-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.upload-notification.hide {
+    animation: slide-out 0.3s ease-in forwards;
+}
+
+@keyframes slide-out {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+.upload-notification-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--highlight-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+}
+
+.upload-notification-text {
+    flex: 1;
+}
+
+.upload-notification-close {
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.upload-notification-close:hover {
+    color: var(--highlight-color);
+}

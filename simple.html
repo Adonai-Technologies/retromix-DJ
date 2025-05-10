@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroMix DJ - Simple Version</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-retro" data-layout="standard">
+    <div class="container">
+        <header>
+            <h1 class="retro-text">RetroMix DJ - Simple Version</h1>
+            <div class="controls-container">
+                <div class="bpm-display">
+                    <span id="bpm-value">120</span> BPM
+                </div>
+                <div class="master-controls">
+                    <button class="btn" id="sync-button" data-tooltip="Sync Decks">SYNC</button>
+                    <button class="btn" id="record-button" data-tooltip="Record Mix">REC</button>
+                    <div class="dropdown">
+                        <button class="btn" id="settings-button">SETTINGS</button>
+                        <div class="dropdown-content">
+                            <a href="#" id="theme-retro">Retro Theme</a>
+                            <a href="#" id="theme-modern">Modern Theme</a>
+                            <a href="#" id="theme-neon">Neon Theme</a>
+                            <a href="#" id="theme-minimal">Minimal Theme</a>
+                            <hr>
+                            <a href="#" id="toggle-keyboard">Keyboard Shortcuts</a>
+                            <a href="#" id="toggle-tooltips">Tooltips</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="dj-console">
+            <div class="deck deck-left">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-left">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-left"></div>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-left">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-left" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-left" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-left" data-tooltip="Cue">CUE</button>
+                    </div>
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-left" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-left" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-left" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-left" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-left" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mixer">
+                <div class="crossfader-container">
+                    <input type="range" id="crossfader" min="0" max="100" value="50" class="slider" data-tooltip="Crossfader">
+                    <label>CROSSFADER</label>
+                </div>
+                <div class="visualizer-container">
+                    <div class="visualizer-type-selector">
+                        <button class="btn small-btn active" id="viz-spectrum">SPECTRUM</button>
+                        <button class="btn small-btn" id="viz-waveform">WAVE</button>
+                        <button class="btn small-btn" id="viz-circular">CIRCLE</button>
+                        <button class="btn small-btn" id="viz-3d">3D</button>
+                    </div>
+                    <canvas id="visualizer"></canvas>
+                </div>
+                <div class="effects-pad">
+                    <div class="effect-button" id="effect-1">ECHO</div>
+                    <div class="effect-button" id="effect-2">FILTER</div>
+                    <div class="effect-button" id="effect-3">FLANGER</div>
+                    <div class="effect-button" id="effect-4">BITCRUSH</div>
+                </div>
+            </div>
+            
+            <div class="deck deck-right">
+                <div class="deck-top">
+                    <div class="turntable">
+                        <div class="record" id="record-right">
+                            <div class="record-label"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm-right"></div>
+                    </div>
+                </div>
+                <div class="deck-controls">
+                    <div class="track-info" id="track-info-right">No track loaded</div>
+                    <div class="control-buttons">
+                        <button class="btn" id="load-right" data-tooltip="Load Track">LOAD</button>
+                        <button class="btn" id="play-right" data-tooltip="Play/Pause">PLAY</button>
+                        <button class="btn" id="cue-right" data-tooltip="Cue">CUE</button>
+                    </div>
+                    <div class="knobs">
+                        <div class="knob-container">
+                            <div class="knob" id="speed-right" data-tooltip="Playback Speed"></div>
+                            <label>SPEED</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-high-right" data-tooltip="High EQ"></div>
+                            <label>HIGH</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-mid-right" data-tooltip="Mid EQ"></div>
+                            <label>MID</label>
+                        </div>
+                        <div class="knob-container">
+                            <div class="knob" id="eq-low-right" data-tooltip="Low EQ"></div>
+                            <label>LOW</label>
+                        </div>
+                    </div>
+                    <div class="volume-slider">
+                        <input type="range" id="volume-right" min="0" max="100" value="80" class="slider" data-tooltip="Volume">
+                        <label>VOLUME</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sample-pads">
+            <div class="pad" id="pad-1">BEAT 1</div>
+            <div class="pad" id="pad-2">BEAT 2</div>
+            <div class="pad" id="pad-3">VOCAL</div>
+            <div class="pad" id="pad-4">HORN</div>
+            <div class="pad" id="pad-5">SCRATCH</div>
+            <div class="pad" id="pad-6">DROP</div>
+            <div class="pad" id="pad-7">SIREN</div>
+            <div class="pad" id="pad-8">NOISE</div>
+        </div>
+        
+        <footer>
+            <div class="credits">
+                <p>RetroMix DJ - Simple Version</p>
+                <p>Created for the "That's Entertainment!" Challenge</p>
+                <p>Built with Amazon Q Developer</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dialogs -->
+    <div id="file-dialog" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Load Audio File</h2>
+            <input type="file" id="audio-file-input" accept="audio/*">
+            <button id="load-file-btn" class="btn">Load</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio-engine.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/ui-controller.js"></script>
+    <script src="js/simple-app.js"></script>
+</body>
+</html>

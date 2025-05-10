@@ -1,0 +1,369 @@
+/* RetroMix DJ - Advanced Audio Processing Styles */
+
+/* Effects Panel */
+.effects-panel {
+    background-color: var(--panel-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.effects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.effects-header h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: var(--highlight-color);
+    margin: 0;
+}
+
+/* Effects Tabs */
+.effects-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.effects-tab {
+    padding: 8px 15px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.effects-tab:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.effects-tab.active {
+    background-color: var(--secondary-color);
+    color: #000;
+}
+
+/* Effects Content */
+.effects-content {
+    display: none;
+}
+
+.effects-content.active {
+    display: block;
+}
+
+/* Deck Selector */
+.deck-selector {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.deck-button {
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    transition: all 0.2s;
+    border-radius: 5px;
+}
+
+.deck-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.deck-button.active {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+/* Effect Controls */
+.effect-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.effect-unit {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.effect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.effect-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+}
+
+.effect-toggle {
+    width: 40px;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.effect-toggle.active {
+    background-color: var(--highlight-color);
+}
+
+.effect-toggle::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.effect-toggle.active::after {
+    transform: translateX(20px);
+}
+
+.effect-params {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.effect-param {
+    display: flex;
+    flex-direction: column;
+}
+
+.param-label {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.param-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    outline: none;
+}
+
+.param-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--highlight-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.param-value {
+    font-size: 0.7rem;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Compressor Controls */
+.compressor-controls {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.compressor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.compressor-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+}
+
+.compressor-toggle {
+    width: 40px;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.compressor-toggle.active {
+    background-color: var(--highlight-color);
+}
+
+.compressor-toggle::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.compressor-toggle.active::after {
+    transform: translateX(20px);
+}
+
+.compressor-bands {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.compressor-band {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.band-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.band-title {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.band-params {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.limiter-controls {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+/* Sidechain Controls */
+.sidechain-controls {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.sidechain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sidechain-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+}
+
+.sidechain-toggle {
+    width: 40px;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidechain-toggle.active {
+    background-color: var(--highlight-color);
+}
+
+.sidechain-toggle::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.sidechain-toggle.active::after {
+    transform: translateX(20px);
+}
+
+.sidechain-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.sidechain-option {
+    display: flex;
+    flex-direction: column;
+}
+
+.param-select {
+    background-color: #000;
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    padding: 5px;
+    border-radius: 3px;
+    font-family: inherit;
+}
+
+.sidechain-params {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .effect-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .compressor-bands {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidechain-options {
+        grid-template-columns: 1fr;
+    }
+}
